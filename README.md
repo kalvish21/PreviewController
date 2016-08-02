@@ -19,6 +19,8 @@ pod 'MBProgressHUD'
 
 4. Be sure to implement `QLPreviewControllerDataSource` for each class that uses PreviewController.
 
+5. Currently PreviewController is not available on Cocoapods. You can add the files to your project manually.
+
 ### Code example
 
 A simple use case would be the following:
