@@ -23,14 +23,6 @@ class PreviewController: QLPreviewController, QLPreviewControllerDataSource {
         }
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    }
-    
-    required public init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     func getLocalPathForUrl(url: NSURL) -> String {
         let fileExtension = url.pathExtension!
         let fileName = self.md5(string: url.absoluteString)
