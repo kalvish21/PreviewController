@@ -6,7 +6,18 @@ PreviewController allows for easy loading of remote URL's containing valid files
 
 ### Usage
 
-Currently, the project is not available on cocoapods (yet). It's a small project, and can be added via the normal project add files. Be sure to add `#import <CommonCrypto/CommonCrypto.h>` to your Bridging Header. Also, add `MBProgressHUD` pod in your podfile. Also, for each file that requires this functionality, put `import QuickLook` on the top of the file.
+1. Using cocoapods, add the following:
+
+```
+pod 'Alamofire'
+pod 'MBProgressHUD'
+```
+
+2. Add `#import <CommonCrypto/CommonCrypto.h>` to your Bridging Header.
+
+3. Add `import QuickLook` to each file that requires PreviewController.
+
+4. Be sure to implement `QLPreviewControllerDataSource` for each class that uses PreviewController.
 
 ### Code example
 
