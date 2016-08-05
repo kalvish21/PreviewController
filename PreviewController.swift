@@ -44,21 +44,19 @@ class PreviewController: QLPreviewController, QLPreviewControllerDataSource {
     
     func previewController(controller: QLPreviewController, previewItemAtIndex index: Int) -> QLPreviewItem {
 
-        let originalPreviewItem = self.usersDataSource!.previewController(controller, previewItemAtIndex: index)
-        let previewItemCopy: PreviewItem = PreviewItem(title: originalPreviewItem.previewItemTitle!!, location: originalPreviewItem.previewItemURL)
-        let originalUrl = previewItemCopy.previewItemURL
-        let localFilePath: NSURL = NSURL(fileURLWithPath: getLocalPathForUrl(originalUrl))
+        let previewItem: PreviewItem = self.usersDataSource!.previewController(controller, previewItemAtIndex: index) as! PreviewItem
+        let localFilePath: NSURL = NSURL(fileURLWithPath: getLocalPathForUrl(previewItem.previewItemURL))
 
-        if originalUrl.isFileReferenceURL() {
-            return previewItemCopy
+        if previewItem.previewItemURL.isFileReferenceURL() {
+            return previewItem
         }
         
         // Local file path
-        previewItemCopy.setUrl(localFilePath)
+        previewItem.setUrl(localFilePath)
         
         // See if file exists
         if NSFileManager.defaultManager().fileExistsAtPath(localFilePath.path!) {
-            return previewItemCopy
+            return previewItem
         }
         
         // Download the file to cache
@@ -71,7 +69,7 @@ class PreviewController: QLPreviewController, QLPreviewControllerDataSource {
         progressBar.show(true)
         
         // Download file
-        Alamofire.download(.GET, originalUrl,
+        Alamofire.download(.GET, previewItem.previewItemURL,
             destination: { (temporaryURL, response) in
                 return localFilePath
         })
@@ -90,7 +88,7 @@ class PreviewController: QLPreviewController, QLPreviewControllerDataSource {
                 controller.refreshCurrentPreviewItem()
         }
         
-        return previewItemCopy
+        return previewItem
     }
     
     // Convert string to MD5
